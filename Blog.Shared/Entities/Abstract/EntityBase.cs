@@ -20,6 +20,6 @@ namespace Blog.Shared.Entities.Abstract
 
         public virtual string ModifiedByName { get; set; } = "Admin";
 
-        public virtual string Note { get; set; };
+        public virtual string Note { get; set; }
     }
 }
