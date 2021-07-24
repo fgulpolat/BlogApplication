@@ -76,12 +76,18 @@ namespace Blog.Services.Concrete
             {
                 return new DataResult<CategoryListDto>(ResultStatus.Success, new CategoryListDto
                 {
-                    Categories = categories
+                    Categories = categories,
+                    ResultStatus=ResultStatus.Success
                 });
             }
             else
             {
-                return new DataResult<CategoryListDto>(ResultStatus.Error, "Hiç bir kategori bulunamadı", null);
+                return new DataResult<CategoryListDto>(ResultStatus.Error, "Hiç bir kategori bulunamadı", new CategoryListDto
+                {
+                    Categories = null,
+                    ResultStatus = ResultStatus.Error,
+                    Message = "Böyle bir kategori bulunamadı."
+                });
 
             }
         }
@@ -144,6 +150,6 @@ namespace Blog.Services.Concrete
             return new DataResult<CategoryDto>(ResultStatus.Success, $"{categoryUpdateDto.Name} başarılı bir şekilde güncellenmiştir.", new CategoryDto { Category = category, ResultStatus = ResultStatus.Success, Message = $"{categoryUpdateDto.Name} başarılı bir şekilde güncellenmiştir." });
 
         }
-   
+
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blog.Services.Automapper.Profiles;
 using Blog.Services.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,8 +18,9 @@ namespace Blog.WebUI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile));
             services.LoadMyServices();
+            services.AddMvc();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
@@ -37,15 +39,12 @@ namespace Blog.WebUI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapAreaControllerRoute(
-                    name:"Admin",
-                    areaName:"Admin",
-                    pattern:"Admin/{Controller?Home}/{Action=Index/Id?}"
-                    );
+                    name: "Admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
+                );
+                endpoints.MapDefaultControllerRoute();
 
-                endpoints.MapGet("/", async context =>
-                {
-                    endpoints.MapDefaultControllerRoute();
-                });
             });
         }
     }
